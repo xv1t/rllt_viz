@@ -1,0 +1,20 @@
+#!/bin/bash
+#
+#
+#
+echo "Start auto commit"
+#echo -n "Write commit comment[default is autodate]: "
+#read msg
+
+#if  [[ $msg == "" ]]; then
+  msg="Autocommit from $HOSTNAME at `date`"
+#fi
+
+git add *
+git commit -m "$msg"
+# -m "autocommit from $HOSTNAME `date`"
+git push
+
+echo "Pulling on remote host"
+echo "***********"
+#ssh webdev@web01.lservice.local 'cd /var/www-data/jobshop/; git pull;'
