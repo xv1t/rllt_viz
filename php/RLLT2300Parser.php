@@ -94,17 +94,17 @@ class RLLT2300Parser {
                 $ctime = $this->txt2date( $txtdatum['Erst.dat'])
                     . ' ' .$txtdatum['Uhrzeit'];
                 
-                $success = $current <= strtotime($ctime) + 3600;
+                $success = ($current <= strtotime($ctime) + 3600);
                 
                 $data[] = array(
-                    'ctime' =>$ctime,                    
-                    'TO number'    => $txtdatum['TA-Nummer'],
-                    'TO position'  => $txtdatum['Pos.'],
-                    'Source Stype' => $txtdatum['Typ'],
-                    'Source Sbin'  => $txtdatum['Vonplatz'],
+                    'ctime' => $ctime,
+                    'TO number'         => $txtdatum['TA-Nummer'],
+                    'TO position'       => $txtdatum['Pos.'],
+                    'Source Stype'      => $txtdatum['Typ'],
+                    'Source Sbin'       => $txtdatum['Vonplatz'],
                     'Destination Sbin'  => $txtdatum['Nachplatz'],
-                    'Quantity'  => $txtdatum['Sollmenge Nach'],
-                    'Unit of mesure'  => $txtdatum['BME'],
+                    'Quantity'          => $txtdatum['Sollmenge Nach'],
+                    'Unit of mesure'    => $txtdatum['BME'],
                     'Status' => $success
                             ? 'on time'
                             : 'delay'
