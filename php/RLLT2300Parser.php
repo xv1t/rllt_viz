@@ -8,6 +8,7 @@ function debug($var){
 class RLLT2300Parser {
     var $filename = false;
     var $current_time;
+    var $data, $txtdata;
     
     private function str_clear($str){
         return rtrim(ltrim($str));
@@ -111,9 +112,11 @@ class RLLT2300Parser {
             }
         }
         
+        $this->data = $data;
+        $this->txtdata = $txtdata;
         
-        debug(compact('txtdata', 'data'));
-        debug($this->current_time);
+        //debug(compact('txtdata', 'data'));
+        //debug($this->current_time);
         
        // print_r($lines);
     }

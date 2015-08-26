@@ -15,3 +15,5 @@ if (!file_exists($parser->filename))
 
 $parser->read();
 
+file_put_contents('tmp/data.json', json_encode($parser->data));
+
