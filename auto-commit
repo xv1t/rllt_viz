@@ -10,7 +10,7 @@ echo "Start auto commit"
   msg="Autocommit from $HOSTNAME at `date`"
 #fi
 
-git add *
+git add * -f
 git commit -m "$msg"
 # -m "autocommit from $HOSTNAME `date`"
 git push
