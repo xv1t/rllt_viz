@@ -49,5 +49,6 @@ echo empty($settings['vars']['header'])
 
 <?php
    // debug($data);
-    //print_r($this->globalVars)
+  //  print_r($this->globalVars)
 ?>
+

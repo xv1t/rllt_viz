@@ -11,6 +11,7 @@ class RLLT2300Parser {
     var $filename = false;
     var $current_time;
     var $data, $txtdata;
+    var $settings = array();
     
     private function str_clear($str){
         return rtrim(ltrim($str));
@@ -89,7 +90,12 @@ class RLLT2300Parser {
         
         $data = array();
         
-        $current = strtotime($this->current_time);
+        if ($this->settings['time']['current'] == 'file')
+            $current = strtotime($this->current_time);
+        
+        if ($this->settings['time']['current'] == 'os')
+            $current = strtotime(date("Y-m-d H:i:s"));
+        
         if ($txtdata){
             foreach ($txtdata as $txtdatum){
                 

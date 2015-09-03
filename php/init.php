@@ -6,6 +6,9 @@ require 'RLLTApplication.php';
 function init($argv = array()){
 
     $parser = new RLLT2300Parser();
+    
+    $settings = parse_ini_file('settings.ini', true);
+    $parser->settings = $settings;
 
     if (!empty($argv[1]))
         $parser->filename = $argv[1];
@@ -25,7 +28,7 @@ function init($argv = array()){
     $app->set(array(
         'md5sum' => md5_file($parser->filename),
         'data' => $parser->data,
-        'settings' => parse_ini_file('settings.ini', true),
+        'settings' => $settings,
         'file_name' => $src_file_name,
         'file_date' => $parser->current_time
         ));
