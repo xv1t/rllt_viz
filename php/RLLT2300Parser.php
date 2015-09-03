@@ -100,6 +100,8 @@ class RLLT2300Parser {
                 
                 $data[] = array(
                     'ctime' => $ctime,
+                    'current' => $current,
+                    'time' => strtotime($ctime),
                     'TO number'         => $txtdatum['TA-Nummer'],
                     'TO position'       => $txtdatum['Pos.'],
                     'Source Stype'      => $txtdatum['Typ'],
@@ -114,6 +116,8 @@ class RLLT2300Parser {
             }
         }
         
+        $data = $this->sort($data, 'time');
+        
         $this->data = $data;
         $this->txtdata = $txtdata;
         
@@ -121,5 +125,19 @@ class RLLT2300Parser {
         //debug($this->current_time);
         
        // print_r($lines);
+    }
+    
+    public function sort($data, $field){
+        /*
+         * create list array
+         */
+        
+        $list = array();
+        foreach ($data as $key => $row)
+        {
+            $list[$key] = $row[$field];
+        }
+        array_multisort($list, SORT_DESC, $data);
+        return $data;
     }
 }
