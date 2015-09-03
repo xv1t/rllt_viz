@@ -26,7 +26,8 @@ function init($argv = array()){
         'md5sum' => md5_file($parser->filename),
         'data' => $parser->data,
         'settings' => parse_ini_file('settings.ini', true),
-        'file_name' => $src_file_name
+        'file_name' => $src_file_name,
+        'file_date' => $parser->current_time
         ));
     $page =  $app->page();
     

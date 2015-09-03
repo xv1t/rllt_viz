@@ -1,7 +1,10 @@
 <?php 
 echo empty($settings['vars']['header'])
     ? null
-    : $this->tag('h2', $settings['vars']['header'])
+    : $this->tag(
+            'h2', 
+            $settings['vars']['header'] . ' ' . $this->tag('small', "$file_name: $file_date")
+            )
 ?>
 <table class="table table-bordered table-hover table-striped">
     <thead>
