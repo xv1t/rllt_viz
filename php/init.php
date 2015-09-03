@@ -1,6 +1,7 @@
 #!/usr/bin/php
 <?php
 require 'RLLT2300Parser.php';
+require 'RLLTApplication.php';
 
 function init($argv = array()){
 
@@ -17,7 +18,19 @@ function init($argv = array()){
 
     $parser->read();
 
-    debug($parser->data);
+    //debug($parser->data);
+    
+    $app = new RLLTApplication();
+    $app->set(array(
+        'md5sum' => md5_file($parser->filename),
+        'data' => $parser->data,
+        'settings' => parse_ini_file('settings.ini', true)
+        ));
+    $page =  $app->page();
+    
+    
+    
+    file_put_contents('html' . DIRECTORY_SEPARATOR . 'test.html', $page);
     
     //file_put_contents('tmp/data.json', json_encode($parser->data));    
 }
