@@ -28,9 +28,9 @@ function init($argv = array()){
         ));
     $page =  $app->page();
     
+    $src_file_name = end(explode(DIRECTORY_SEPARATOR, $parser->filename));
     
-    
-    file_put_contents('html' . DIRECTORY_SEPARATOR . 'test.html', $page);
+    file_put_contents('html' . DIRECTORY_SEPARATOR . $src_file_name . '.html', $page);
     
     //file_put_contents('tmp/data.json', json_encode($parser->data));    
 }
