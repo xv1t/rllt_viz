@@ -20,15 +20,17 @@ function init($argv = array()){
 
     //debug($parser->data);
     
+    $src_file_name = end(explode(DIRECTORY_SEPARATOR, $parser->filename));
     $app = new RLLTApplication();
     $app->set(array(
         'md5sum' => md5_file($parser->filename),
         'data' => $parser->data,
-        'settings' => parse_ini_file('settings.ini', true)
+        'settings' => parse_ini_file('settings.ini', true),
+        'file_name' => $src_file_name
         ));
     $page =  $app->page();
     
-    $src_file_name = end(explode(DIRECTORY_SEPARATOR, $parser->filename));
+    
     
     file_put_contents('html' . DIRECTORY_SEPARATOR . $src_file_name . '.html', $page);
     
