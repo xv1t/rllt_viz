@@ -2,18 +2,25 @@
 <?php
 require 'RLLT2300Parser.php';
 
-$parser = new RLLT2300Parser();
+function init($argv = array()){
 
-if (!empty($_SERVER['argv'][1]))
-    $parser->filename = $_SERVER['argv'][1];
+    $parser = new RLLT2300Parser();
 
-if (!$parser->filename)
-    die("File not set!\n");
+    if (!empty($argv[1]))
+        $parser->filename = $argv[1];
 
-if (!file_exists($parser->filename))
-    die("File {$parser->filename} not exists!\n");
+    if (!$parser->filename)
+        die("File not set!\n");
 
-$parser->read();
+    if (!file_exists($parser->filename))
+        die("File {$parser->filename} not exists!\n");
 
-file_put_contents('tmp/data.json', json_encode($parser->data));
+    $parser->read();
 
+    debug($parser->data);
+    
+    //file_put_contents('tmp/data.json', json_encode($parser->data));    
+}
+
+
+init($_SERVER['argv']);
