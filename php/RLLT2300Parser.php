@@ -115,6 +115,7 @@ class RLLT2300Parser {
                     'Destination Sbin'  => $txtdatum['Nachplatz'],
                     'Quantity'          => $txtdatum['Sollmenge Nach'],
                     'Unit of mesure'    => $txtdatum['BME'],
+                    'Material' => $txtdatum['Material'],
                     'Status' => $success
                             ? 'on time'
                             : 'delay'
