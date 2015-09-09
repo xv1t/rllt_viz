@@ -1,6 +1,6 @@
 
-//document.write(new Date())
-console.log(new Date())
+document.write(new Date())
+//console.log(new Date())
 setTimeout(function(){
     location.reload(false)
-}, 60000)
+}, 5000)
