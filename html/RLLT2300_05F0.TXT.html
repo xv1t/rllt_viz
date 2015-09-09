@@ -4,7 +4,6 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
-        <link rel="stylesheet" type="text/css" href="../libs/bootstrap/css/bootstrap.min.css" />
         <!--
         <link rel="stylesheet" type="text/css" href="../libs/font-awesome/css/font-awesome.min.css" />
         
@@ -12,17 +11,71 @@
         <script src="../libs/underscore-min.js"></script>
         <script src="../libs/bootstrap/js/bootstrap.min.js"></script>
         -->
-        <script src="../js/module.js"></script>
     </head>
-    <body>
+    <style>
+    table.table tbody tr.success td{
+        background-color: #c1e2b3
+    }
+    
+    table.table tbody tr.danger td{
+        background-color: #ebcccc
+    }
+    
+    table.table {
+        width: 100%;
+    }
+    
+    table.table tr td {
+        padding: 5px;
+    }
+    
+    table.table tr.danger:hover td{
+        background-color: firebrick;
+        color: white;
+    }
+    
+    table.table tr.success:hover td
+    
+    {
+        background-color: darkolivegreen;
+        color: white;
+    }
+    
+    table.table thead tr th{
+        font-weight: normal;
+        background-color: #d4d4d4;
+    }
+    
+    .container-fluid{
+
+    }
+    
+    body, html{
+        font-family: arial;
+    }
+    
+    .text-right{
+        text-align: right;
+    }
+    
+    h2 {
+        font-weight: normal;
+    }
+    
+    h2 small{
+        font-size: 70%;
+        font-weight: normal;
+        color: grey;
+    }
+</style>    <body>
         <div class="container-fluid">
-            <h2>Header of table <small>RLLT2300_05F0.TXT: 2015-09-02 12:20:56</small></h2><table class="table table-bordered table-hover table-striped">
+            <h2>Header of table <small>RLLT2300_05F0.TXT: 2015-08-25 08:36:19</small></h2><table class="table table-bordered table-hover table-striped">
     <thead>
         <tr>
         <th>TO number</th><th>TO position</th><th>Material</th><th>Source Stype</th><th>Source Sbin</th><th>Destination Sbin</th><th>Quantity</th><th>Unit of mesure</th>        </tr>
     </thead>
     <tbody>
-    <tr class="success"><td class="">2000004330</td><td class="">0001</td><td class="">0265.244.078-6A0</td><td class="">800</td><td class="">4946500328</td><td class="">W5-08-00/1</td><td class="text-right">180</td><td class="">ST</td></tr><tr class="success"><td class="">2000004332</td><td class="">0001</td><td class="">0265.956.317</td><td class="">100</td><td class="">W3-04-00/1</td><td class="">PSA305</td><td class="text-right">132</td><td class="">ST</td></tr><tr class="success"><td class="">2000004331</td><td class="">0001</td><td class="">1263.414.857</td><td class="">100</td><td class="">W3-10-00/1</td><td class="">PSA305</td><td class="text-right">1.200</td><td class="">ST</td></tr><tr class="success"><td class="">2000004287</td><td class="">0001</td><td class="">1260.526.857</td><td class="">100</td><td class="">W1-03-02/4</td><td class="">PSA305</td><td class="text-right">480</td><td class="">ST</td></tr><tr class="success"><td class="">2000004286</td><td class="">0001</td><td class="">1267.690.800</td><td class="">100</td><td class="">W1-01-00/4</td><td class="">PSA305</td><td class="text-right">600</td><td class="">ST</td></tr><tr class="success"><td class="">2000004285</td><td class="">0001</td><td class="">1267.690.802</td><td class="">100</td><td class="">W1-02-00/3</td><td class="">PSA305</td><td class="text-right">600</td><td class="">ST</td></tr><tr class="success"><td class="">2000004284</td><td class="">0001</td><td class="">1267.691.801</td><td class="">100</td><td class="">W1-01-00/2</td><td class="">PSA305</td><td class="text-right">600</td><td class="">ST</td></tr><tr class="success"><td class="">2000004283</td><td class="">0001</td><td class="">1267.691.803</td><td class="">100</td><td class="">W1-03-00/2</td><td class="">PSA305</td><td class="text-right">600</td><td class="">ST</td></tr><tr class="danger"><td class="">2000004149</td><td class="">0005</td><td class="">0265.805.027</td><td class="">CC2</td><td class="">W3-05-00/1</td><td class="">C02</td><td class="text-right">176</td><td class="">ST</td></tr><tr class="danger"><td class="">2000004215</td><td class="">0001</td><td class="">0130.108.315</td><td class="">CC2</td><td class="">W3-07-00/3</td><td class="">C03</td><td class="text-right">144</td><td class="">ST</td></tr>        
+    <tr class="success"><td class="">2000004030</td><td class="">0001</td><td class="">1267.690.800</td><td class="">100</td><td class="">W2-01-00/3</td><td class="">PSA305</td><td class="text-right">600</td><td class="">ST</td></tr><tr class="success"><td class="">2000003979</td><td class="">0001</td><td class="">1267.690.802</td><td class="">100</td><td class="">W1-01-00/2</td><td class="">PSA305</td><td class="text-right">600</td><td class="">ST</td></tr><tr class="success"><td class="">2000003978</td><td class="">0001</td><td class="">0265.805.027</td><td class="">100</td><td class="">C02</td><td class="">PSA305</td><td class="text-right">160</td><td class="">ST</td></tr><tr class="success"><td class="">2000003977</td><td class="">0001</td><td class="">1260.526.857</td><td class="">100</td><td class="">W1-05-01/9</td><td class="">PSA305</td><td class="text-right">480</td><td class="">ST</td></tr><tr class="danger"><td class="">2000003892</td><td class="">0001</td><td class="">0265.956.165</td><td class="">CC2</td><td class="">C12</td><td class="">C12</td><td class="text-right">132</td><td class="">ST</td></tr><tr class="danger"><td class="">2000003892</td><td class="">0002</td><td class="">0265.956.165</td><td class="">CC2</td><td class="">C12</td><td class="">C12</td><td class="text-right">132</td><td class="">ST</td></tr><tr class="danger"><td class="">2000003892</td><td class="">0003</td><td class="">0265.956.165</td><td class="">CC2</td><td class="">C12</td><td class="">C12</td><td class="text-right">132</td><td class="">ST</td></tr><tr class="danger"><td class="">2000003892</td><td class="">0004</td><td class="">0265.956.165</td><td class="">CC2</td><td class="">C12</td><td class="">C12</td><td class="text-right">132</td><td class="">ST</td></tr>        
     </tbody>
 </table>
 
@@ -30,4 +83,9 @@
 
         </div>
     </body>
+    <script>
+    setTimeout(function(){
+        location.reload(false)
+    }, 5000)
+    </script>
 </html>

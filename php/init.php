@@ -41,7 +41,6 @@ function init($argv = array()){
     $page =  $app->page();
     
     
-    
     file_put_contents('html' . DIRECTORY_SEPARATOR . $src_file_name . '.html', $page);
     
     //file_put_contents('tmp/data.json', json_encode($parser->data));    

@@ -1,9 +1,13 @@
 <?php 
+$current = $settings['time']['current'] == 'os'
+        ? date('Y-m-d H:i:s')
+        :$file_date;
+
 echo empty($settings['vars']['header'])
     ? null
     : $this->tag(
             'h2', 
-            $settings['vars']['header'] . ' ' . $this->tag('small', "$file_name: $file_date")
+            $settings['vars']['header'] . ' ' . $this->tag('small', "$file_name: $current")
             )
 ?>
 <table class="table table-bordered table-hover table-striped">

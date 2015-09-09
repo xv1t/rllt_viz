@@ -45,6 +45,7 @@ class RLLTApplication {
     }
     
     public function element($element_name, $vars = array(), $options = array()){
+       
         $element_file_name = 'php' . DIRECTORY_SEPARATOR .  'elements' . DIRECTORY_SEPARATOR . $element_name . '.ctp';
         if (file_exists($element_file_name)){
             extract($this->globalVars + $vars);
@@ -56,9 +57,17 @@ class RLLTApplication {
     }
     
     public function page($vars = array()){
-        $layout_file =  'php' . DIRECTORY_SEPARATOR . 'elements' . DIRECTORY_SEPARATOR . 'layout.ctp';
+        
+                
+        $layout_name = empty($this->globalVars['settings']['vars']['layout'])
+                ? 'layout'
+                : $this->globalVars['settings']['vars']['layout'];
+        
+        
+        
+        $layout_file =  'php' . DIRECTORY_SEPARATOR . 'elements' . DIRECTORY_SEPARATOR . $layout_name . '.ctp';
         if (file_exists($layout_file)){
-            return $this->element('layout', $vars);
+            return $this->element($layout_name, $vars);
         } else echo "File: $layout_file not exists";
     }
 }
