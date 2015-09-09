@@ -1,5 +1,11 @@
 #!/usr/bin/php
 <?php
+#
+#	Main init script
+#
+#
+#
+
 require 'RLLT2300Parser.php';
 require 'RLLTApplication.php';
 
