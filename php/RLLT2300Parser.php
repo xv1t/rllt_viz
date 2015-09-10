@@ -41,7 +41,7 @@ class RLLT2300Parser {
          * Check empty table
          */
         
-        $data = array();
+        $this->data  = $data = array();
         
         if (strpos($content, '| Liste enth')){
             return false;
