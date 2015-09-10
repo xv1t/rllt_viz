@@ -12,13 +12,21 @@
         <script src="../libs/bootstrap/js/bootstrap.min.js"></script>
         -->
     </head>
-    <style>
+    <!-- 
+This styles for the internal rules: no libs, no requires
+-->
+<style>
     table.table tbody tr.success td{
-        background-color: #c1e2b3
+        /*background-color: #c1e2b3 */
+		background-color: green;
+		color: white;
+		
     }
     
     table.table tbody tr.danger td{
-        background-color: #ebcccc
+        /*background-color: #ebcccc */
+		background-color: red;
+		color: white;
     }
     
     table.table {
@@ -27,18 +35,18 @@
     
     table.table tr td {
         padding: 5px;
+		text-align: center;
     }
     
     table.table tr.danger:hover td{
         background-color: firebrick;
-        color: white;
+        /*color: white; */
     }
     
-    table.table tr.success:hover td
-    
+    table.table tr.success:hover td    
     {
         background-color: darkolivegreen;
-        color: white;
+        /* color: white; */
     }
     
     table.table thead tr th{
@@ -69,13 +77,13 @@
     }
 </style>    <body>
         <div class="container-fluid">
-            <h2>Header of table <small>RLLT2300_05F0.TXT: 2015-08-25 08:36:19</small></h2><table class="table table-bordered table-hover table-striped">
+            <h2>Open transfer orders <small>2015-09-11 00:16:23</small></h2><table class="table table-bordered table-hover table-striped">
     <thead>
         <tr>
-        <th>TO number</th><th>TO position</th><th>Material</th><th>Source Stype</th><th>Source Sbin</th><th>Destination Sbin</th><th>Quantity</th><th>Unit of mesure</th>        </tr>
+        <th>TO number</th><th>TO position</th><th>Material</th><th>Destination Stype</th><th>Source Sbin</th><th>Destination Sbin</th><th>Quantity</th><th>Unit of mesure</th>        </tr>
     </thead>
     <tbody>
-    <tr class="success"><td class="">2000004030</td><td class="">0001</td><td class="">1267.690.800</td><td class="">100</td><td class="">W2-01-00/3</td><td class="">PSA305</td><td class="text-right">600</td><td class="">ST</td></tr><tr class="success"><td class="">2000003979</td><td class="">0001</td><td class="">1267.690.802</td><td class="">100</td><td class="">W1-01-00/2</td><td class="">PSA305</td><td class="text-right">600</td><td class="">ST</td></tr><tr class="success"><td class="">2000003978</td><td class="">0001</td><td class="">0265.805.027</td><td class="">100</td><td class="">C02</td><td class="">PSA305</td><td class="text-right">160</td><td class="">ST</td></tr><tr class="success"><td class="">2000003977</td><td class="">0001</td><td class="">1260.526.857</td><td class="">100</td><td class="">W1-05-01/9</td><td class="">PSA305</td><td class="text-right">480</td><td class="">ST</td></tr><tr class="danger"><td class="">2000003892</td><td class="">0001</td><td class="">0265.956.165</td><td class="">CC2</td><td class="">C12</td><td class="">C12</td><td class="text-right">132</td><td class="">ST</td></tr><tr class="danger"><td class="">2000003892</td><td class="">0002</td><td class="">0265.956.165</td><td class="">CC2</td><td class="">C12</td><td class="">C12</td><td class="text-right">132</td><td class="">ST</td></tr><tr class="danger"><td class="">2000003892</td><td class="">0003</td><td class="">0265.956.165</td><td class="">CC2</td><td class="">C12</td><td class="">C12</td><td class="text-right">132</td><td class="">ST</td></tr><tr class="danger"><td class="">2000003892</td><td class="">0004</td><td class="">0265.956.165</td><td class="">CC2</td><td class="">C12</td><td class="">C12</td><td class="text-right">132</td><td class="">ST</td></tr>        
+    <tr class="danger"><td class="">2000003892</td><td class="">0001</td><td class="">0265.956.165</td><td class="">CC2</td><td class="">C12</td><td class="">C12</td><td class="text-right">132</td><td class="">ST</td></tr><tr class="danger"><td class="">2000003892</td><td class="">0002</td><td class="">0265.956.165</td><td class="">CC2</td><td class="">C12</td><td class="">C12</td><td class="text-right">132</td><td class="">ST</td></tr><tr class="danger"><td class="">2000003892</td><td class="">0003</td><td class="">0265.956.165</td><td class="">800</td><td class="">C12</td><td class="">C12</td><td class="text-right">132</td><td class="">ST</td></tr><tr class="danger"><td class="">2000003892</td><td class="">0004</td><td class="">0265.956.165</td><td class="">CC2</td><td class="">C12</td><td class="">C12</td><td class="text-right">132</td><td class="">ST</td></tr><tr class="danger"><td class="">2000003977</td><td class="">0001</td><td class="">1260.526.857</td><td class="">100</td><td class="">W1-05-01/9</td><td class="">PSA305</td><td class="text-right">480</td><td class="">ST</td></tr><tr class="danger"><td class="">2000003978</td><td class="">0001</td><td class="">0265.805.027</td><td class="">100</td><td class="">C02</td><td class="">PSA305</td><td class="text-right">160</td><td class="">ST</td></tr><tr class="danger"><td class="">2000003979</td><td class="">0001</td><td class="">1267.690.802</td><td class="">100</td><td class="">W1-01-00/2</td><td class="">PSA305</td><td class="text-right">600</td><td class="">ST</td></tr><tr class="danger"><td class="">2000004030</td><td class="">0001</td><td class="">1267.690.800</td><td class="">100</td><td class="">W2-01-00/3</td><td class="">PSA305</td><td class="text-right">600</td><td class="">ST</td></tr>        
     </tbody>
 </table>
 
@@ -86,6 +94,6 @@
     <script>
     setTimeout(function(){
         location.reload(false)
-    }, 5000)
+    }, 10000)
     </script>
 </html>

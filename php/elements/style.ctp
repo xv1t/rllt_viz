@@ -1,10 +1,18 @@
+<!-- 
+This styles for the internal rules: no libs, no requires
+-->
 <style>
     table.table tbody tr.success td{
-        background-color: #c1e2b3
+        /*background-color: #c1e2b3 */
+		background-color: green;
+		color: white;
+		
     }
     
     table.table tbody tr.danger td{
-        background-color: #ebcccc
+        /*background-color: #ebcccc */
+		background-color: red;
+		color: white;
     }
     
     table.table {
@@ -13,18 +21,18 @@
     
     table.table tr td {
         padding: 5px;
+		text-align: center;
     }
     
     table.table tr.danger:hover td{
         background-color: firebrick;
-        color: white;
+        /*color: white; */
     }
     
-    table.table tr.success:hover td
-    
+    table.table tr.success:hover td    
     {
         background-color: darkolivegreen;
-        color: white;
+        /* color: white; */
     }
     
     table.table thead tr th{

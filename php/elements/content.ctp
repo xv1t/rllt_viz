@@ -1,13 +1,10 @@
 <?php 
-$current = $settings['time']['current'] == 'os'
-        ? date('Y-m-d H:i:s')
-        :$file_date;
 
 echo empty($settings['vars']['header'])
     ? null
     : $this->tag(
             'h2', 
-            $settings['vars']['header'] . ' ' . $this->tag('small', "$file_name: $current")
+            $settings['vars']['header'] . ' ' . $this->tag('small', "$file_date")
             )
 ?>
 <table class="table table-bordered table-hover table-striped">
@@ -28,20 +25,28 @@ echo empty($settings['vars']['header'])
     foreach ($data as $datum){
         echo $this->tag('tr', null, array(
             'class' => array(
-                $datum['Status'] == 'delay'
-                    ? 'danger'
-                    : 'success'
+                $datum['RlltDatum']['success'] == 1
+                    ? 'success'
+                    : 'danger'
+                    
             )
         ));
         
-        foreach ($fields as $field)
-            echo $this->tag('td', $datum[ $field ], array(
+        foreach ($fields as $field){
+            echo $this->tag('td', 
+                    isset($datum['RlltDatum'][ $field ])
+                        ? $datum['RlltDatum'][ $field ]
+                        : 'N/A'
+                    , 
+                    
+                    array(
                 'class' => array(
                     in_array($field, $fields_text_right)
                     ? 'text-right'
                     : ''
                 )
             ));
+		}
         
         
         echo $this->closeTag();
@@ -52,7 +57,8 @@ echo empty($settings['vars']['header'])
 
 
 <?php
-   // debug($data);
-  //  print_r($this->globalVars)
+  // debug($data, true);
+   
+  //  debug($this->globalVars)
 ?>
 

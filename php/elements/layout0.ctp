@@ -21,6 +21,6 @@
     <script>
     setTimeout(function(){
         location.reload(false)
-    }, 5000)
+    }, 10000)
     </script>
 </html>
