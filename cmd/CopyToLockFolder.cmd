@@ -1,0 +1,2 @@
+copy /y "C:\Users\admin\Pictures\My pictures\imag1.jpg" "C:\Users\admin\Pictures\My pictures\imag2.jpg"
+copy /y "C:\Users\admin\Pictures\My pictures\imag1.jpg" "C:\Windows\System32\oobe\info\backgrounds\backgroundDefault.jpg"
