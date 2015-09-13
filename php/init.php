@@ -12,6 +12,8 @@ require 'RLLTImage.php';
 
 function init($argv = array()){
 
+print_r($argv);
+
     $parser = new RLLT2300Parser();
     
     $settings = parse_ini_file('settings.ini', true);
