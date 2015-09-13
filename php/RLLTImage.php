@@ -329,7 +329,7 @@ class RLLTImage {
                 'background-color' => 'red'
             ),
         ), array(
-            'font_size' => 30,
+            'font_size' => 14,
             'cols' => array(
                 'Model1.id',
                 'Model1.name',
