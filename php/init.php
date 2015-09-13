@@ -8,6 +8,7 @@
 
 require 'RLLT2300Parser.php';
 require 'RLLTApplication.php';
+require 'RLLTImage.php';
 
 function init($argv = array()){
 
@@ -37,9 +38,37 @@ function init($argv = array()){
         'file_date' => $parser->current_time
         ));
     
-    $page =  $app->page();
+    /*
+     * Make HTML page file
+     */
     
-    file_put_contents('html' . DIRECTORY_SEPARATOR . $src_file_name . '.html', $page);
+    if (isset($settings['visualization']['html_out']) && $settings['visualization']['html_out'] == 1) {
+        $page =  $app->page();    
+        file_put_contents('html' . DIRECTORY_SEPARATOR . $src_file_name . '.html', $page);
+    }
+    
+    /*
+     * Make JPG Image file
+     */
+    
+   // debug($settings);
+    if (isset($settings['visualization']['jpg_out']) && $settings['visualization']['jpg_out'] == 1) {
+        
+       
+        
+        $rllt_image = new RLLTImage();
+        $rllt_image->size['width'] = $settings['image']['width'];
+        $rllt_image->size['height'] = $settings['image']['height'];
+        
+        $rllt_image->draw_report1($parser->data, array(
+            'current_time' => $parser->current_time,
+            'settings' => $settings,
+            'save_to_files' => array(
+                "tmp/$src_file_name.jpg",
+                "tmp/$src_file_name-1.jpg",
+            )
+        ));
+    }
  
 }
 

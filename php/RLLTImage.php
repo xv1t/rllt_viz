@@ -16,12 +16,12 @@ function color($image, $color_name = 'black'){
         'black' => '0,0,0',
         'blue' => '0,0,255',
         'gray' => '128,128,128',
-        'green' => '0,255,0',
+        'green' => '0,128,0',
         'lawn_green' => '124,252,0',
         'red' => '255,0,0',
         'white' => '255,255,255',
         'yellow' => '255,255,0',
-        
+        'silver' => '192,192,192'
     );
     
     if (empty($colors[$color_name]))
@@ -51,7 +51,7 @@ class RLLTImage {
         
         $_color = color($this->image, $color);
         
-        imagettftext($this->image, $font_size, 0, $x, $y, $_color, DEFAULT_FONT_NAME, $string);
+        return imagettftext($this->image, $font_size, 0, $x, $y, $_color, DEFAULT_FONT_NAME, $string);
     }
     
     
@@ -182,15 +182,15 @@ class RLLTImage {
         
         $row_fixed_height = $max_row_text_height + $cell_padding['top'] + $cell_padding['bottom'];
         
-        debug($cols);
-        print_r(compact('max_row_text_height', 'max_height'));
+        //debug($cols);
+       // print_r(compact('max_row_text_height', 'max_height'));
         
         $top = $table_y0;
         
         $this->table_row(true, $cols, array(
             $table_x0, $top, $table_x1, $top + $row_fixed_height
         ), $options + compact('font_size', 'cell_padding') + array(
-            'background-color' => 'gray',
+            'background-color' => 'silver',
             'color' => 'black',
             'border-color' => 'black'
         ));
@@ -209,11 +209,11 @@ class RLLTImage {
             $top += $row_fixed_height;
         } /**/
         
-        print_r(compact(
+        /*print_r(compact(
                 'table_width',
                 'table_height',
                 'row_height'
-                ));
+                )); * /
         /*
          * Thead
          */
@@ -294,6 +294,64 @@ class RLLTImage {
       
     }
     
+    public function draw_report1($data, $options){
+
+        $this->image = imagecreatetruecolor($this->size['width'], $this->size['height']);
+        imagefill($this->image, 0, 0, color($this->image, 'white'));
+        
+        $header_box = $this->text($options['settings']['vars']['header'], 25, 10, 40, 'black');
+       // print_r($header_box);
+        $this->text($options['current_time'], 20, $header_box[4] + 10, 40, 'gray');
+        
+        $cols = array();
+        foreach (explode(',', $options['settings']['table']['fields']) as $f){
+            $cols[] = "RlltDatum.$f";
+        }
+        
+        $ix =0;
+        foreach ($data as $datum){
+            
+            if ($datum['RlltDatum']['success'] == 1){
+                $data[$ix] += array(
+                    'background-color' => 'green',
+                    'color' => 'white'
+                );
+            }
+            
+            if ($datum['RlltDatum']['success'] == 0){
+                $data[$ix] += array(
+                    'background-color' => 'red',
+                    'color' => 'white'
+                );
+            }
+            $ix++;
+        }
+        
+        $this->table($data, array(
+            'font_size' => 24,
+
+            'cols' => $cols,
+            'padding' => array(
+                'bottom' => 10
+            ),
+            'coords' => array(
+                10, 50, 1910, 1000
+            )
+        ));
+        
+      //  print_r($data);
+        
+        /*
+         * Header of the table
+         */
+        
+        foreach ($options['save_to_files'] as $filename){
+            imagejpeg($this->image, $filename);
+        }
+        
+        // Free up memory
+        imagedestroy($this->image);
+    }
 
     public function testdraw($filename = null){
         
@@ -329,7 +387,7 @@ class RLLTImage {
                 'background-color' => 'red'
             ),
         ), array(
-            'font_size' => 14,
+            'font_size' => 40,
             'cols' => array(
                 'Model1.id',
                 'Model1.name',
@@ -340,7 +398,7 @@ class RLLTImage {
                 'bottom' => 10
             ),
             'coords' => array(
-                10, 10, 1200, 1000
+                10, 10, 1910, 1000
             )
             
         ));
