@@ -5,6 +5,8 @@
 bool imagestring ( resource $image , int $font , int $x , int $y , string $string , int $color )
 array imagettftext ( resource $image , float $size , float $angle , int $x , int $y , int $color , string $fontfile , string $text )
 bool imagerectangle ( resource $image , int $x1 , int $y1 , int $x2 , int $y2 , int $color )
+ * 
+ * array imagettfbbox ( float $size , float $angle , string $fontfile , string $text )
  */
 
 putenv('GDFONTPATH=' . realpath('.' . DIRECTORY_SEPARATOR . 'php' . DIRECTORY_SEPARATOR . 'fonts'));
@@ -18,6 +20,7 @@ function color($image, $color_name = 'black'){
         'lawn_green' => '124,252,0',
         'red' => '255,0,0',
         'white' => '255,255,255',
+        'yellow' => '255,255,0',
         
     );
     
@@ -29,38 +32,323 @@ function color($image, $color_name = 'black'){
     return imagecolorallocate($image, $r, $g ,$b);
 }
 
+define('DEFAULT_FONT_NAME', 'DejaVuSansCondensed');
+        
+
 class RLLTImage {
     //put your code here
     
     var $image;
+    var $size = array(
+        'width' => 1920,
+        'height' => 1080
+    );
+    var $settings = array();
+    var $data = array();
     
     private function text($string, $font_size, $x, $y, $color = 'white'){
         
         
         $_color = color($this->image, $color);
         
-        imagettftext($this->image, $font_size, 0, $x, $y, $_color, 'DejaVuSansCondensed', $string);
+        imagettftext($this->image, $font_size, 0, $x, $y, $_color, DEFAULT_FONT_NAME, $string);
     }
+    
+    
+    public function table($data, $options){
+        /*
+         * Draw table
+         */
+        
+        /*
+         * Calc col widths
+         */
+        
+        $cols = array();
+        $font_size = empty($options['font_size']) ? 20 :$options['font_size'];
+        $max_height = 0;
+        
+        
+        foreach ($options['cols'] as $col_name){
+            $col = array(
+                'name' => $col_name
+            );
+            
+            //array imagettfbbox ( float $size , float $angle , string $fontfile , string $text )
+            /*
+             * 0	нижний левый угол, X координата
+1	нижний левый угол, Y координата
+2	нижний правый угол, X координата
+3	нижний правый угол, Y координата
+4	верхний правый угол, X координата
+5	верхний правый угол, Y координата
+6	верхний левый угол, X координата
+7	верхний левый угол, Y координата
+             */
+            
+            list($model, $field) = explode('.', $col_name, 2);
+            $textbox = array();
+            list(
+                    $textbox['bottom_left_x'],
+                    $textbox['bottom_left_y'],
+                    $textbox['bottom_right_x'],
+                    $textbox['bottom_right_y'],
+                    $textbox['top_left_x'],
+                    $textbox['top_left_y'],
+                    $textbox['top_right_x'],
+                    $textbox['top_right_y'],
+                    
+                    )= imagettfbbox($font_size, 0,   DEFAULT_FONT_NAME, strtoupper($field));
+            //print_r($textbox);
+            $col['text_width']  = $textbox['bottom_right_x'] - $textbox['bottom_left_x'];
+            $col['text_height'] = $textbox['bottom_right_y'] - $textbox['top_right_y'];
+            
+            list($model, $field) = explode('.', $col_name, 2);
+            $col += compact('model', 'field');
+            
+            foreach ($data as $datum){
+                if (!empty($datum[$model][$field])){
+                    $value =$datum[$model][$field];
+                    $textbox = array();
+                    list(
+                        $textbox['bottom_left_x'],
+                        $textbox['bottom_left_y'],
+                        $textbox['bottom_right_x'],
+                        $textbox['bottom_right_y'],
+                        $textbox['top_left_x'],
+                        $textbox['top_left_y'],
+                        $textbox['top_right_x'],
+                        $textbox['top_right_y'],                    
+                        )= imagettfbbox($font_size, 0, DEFAULT_FONT_NAME, $value);
 
+                    $datum_width = $textbox['bottom_right_x'] - $textbox['bottom_left_x'];
+                    $datum_height = $textbox['bottom_right_y'] - $textbox['top_right_y'];
+
+                    if ($col['text_width'] < $datum_width)
+                        $col['text_width'] = $datum_width;
+
+                    if ($col['text_height'] < $datum_height)
+                        $col['text_height'] = $datum_height;
+                }
+            }
+            
+            if ($max_height < $col['text_height'])
+                $max_height = $col['text_height'];
+            
+            $cols[] = $col;
+            
+        }
+        
+        
+        
+        list($table_x0, $table_y0, $table_x1, $table_y1) = $options['coords'];
+        
+        $table_width = $table_x1 - $table_x0;
+        
+        /*
+         * Calculate columns percents
+         */
+        
+        $total_col_width = 0;
+        $max_row_text_height = $max_height;
+        foreach ($cols as $col){
+            $total_col_width += $col['text_width'];
+            if ($col['text_height'] > $max_row_text_height)
+                $max_row_text_height = $col['text_height'];
+        }
+        
+        $ix = 0;
+        foreach ($cols as $col){
+            $cols[$ix]['perc'] = $col['text_width'] / $total_col_width;
+            $cols[$ix]['width'] = (int) floor( $cols[$ix]['perc'] * $table_width );
+            
+             $ix++;
+            
+        }
+        
+        $table_height = $table_y1 - $table_y0;
+        
+        $table_row_count = count($data) + 1; // + thead row
+        
+        $row_caclulate_height = floor( $table_height / $table_row_count );
+        
+        $cell_padding = array(
+            'left'  => empty($options['padding']['left']) ? 5 : $options['padding']['left'],
+            'right'  => empty($options['padding']['right']) ? 5 : $options['padding']['right'],
+            'top'  => empty($options['padding']['top']) ? 5 : $options['padding']['top'],
+            'bottom'  => empty($options['padding']['bottom']) ? 5 : $options['padding']['bottom'],
+        );
+        
+        
+        $row_fixed_height = $max_row_text_height + $cell_padding['top'] + $cell_padding['bottom'];
+        
+        debug($cols);
+        print_r(compact('max_row_text_height', 'max_height'));
+        
+        $top = $table_y0;
+        
+        $this->table_row(true, $cols, array(
+            $table_x0, $top, $table_x1, $top + $row_fixed_height
+        ), $options + compact('font_size', 'cell_padding') + array(
+            'background-color' => 'gray',
+            'color' => 'black',
+            'border-color' => 'black'
+        ));
+        
+        $top += $row_fixed_height;
+        
+        foreach ($data as $datum){
+            $this->table_row($datum, $cols, array(
+                    $table_x0, $top, $table_x1, $top + $row_fixed_height
+                ), $options + compact('font_size', 'cell_padding') + array(
+                    'background-color' => empty($datum['background-color']) ? 'white' : $datum['background-color'],
+                    'color' => empty($datum['color']) ?  'black' : $datum['color'],
+                    'border-color' => empty($datum['border-color']) ?  'black' : $datum['border-color'],
+                ));
+            
+            $top += $row_fixed_height;
+        } /**/
+        
+        print_r(compact(
+                'table_width',
+                'table_height',
+                'row_height'
+                ));
+        /*
+         * Thead
+         */
+        
+        /*
+         * TBody
+         */
+    }
+    
+    public function table_row($datum, $cols, $pos, $options){
+
+            //*col headers
+            //
+        
+        if (empty($options['border-color']))
+            $options['border-color'] = 'black';
+        
+            $xpos = $pos[0];
+            foreach($cols as $col){
+                
+                if (!empty($options['background-color'])){
+                    imagefilledrectangle(
+                        $this->image, 
+                        $xpos,                 $pos[1], 
+                        $xpos + $col['width'], $pos[3], 
+                        color($this->image, $options['background-color']));
+                }
+                
+                imagerectangle(
+                        $this->image, 
+                        $xpos, 
+                        $pos[1], 
+                        $xpos + $col['width'], 
+                        $pos[3], 
+                        color($this->image, $options['border-color']));
+                
+                //drow text
+                
+                list($model, $field) = explode('.', $col['name'], 2);
+                
+                $value = '';
+                if ($datum === true)
+                {
+                    $value = $col['field'];
+                } else {
+                if (isset($datum[$model][$field])) 
+                    $value = $datum[$model][$field];
+                }
+                                        
+                $textbox = array();
+                
+                //$value = "[$value/{$col['field']}]";
+                
+                list(
+                    $textbox['bottom_left_x'],
+                    $textbox['bottom_left_y'],
+                    $textbox['bottom_right_x'],
+                    $textbox['bottom_right_y'],
+                    $textbox['top_left_x'],
+                    $textbox['top_left_y'],
+                    $textbox['top_right_x'],
+                    $textbox['top_right_y'],                    
+                    )= imagettfbbox($options['font_size'], 0, DEFAULT_FONT_NAME, $value);
+
+                    /*
+                     * center alignment
+                     */
+                    
+                    $text_width = $textbox['bottom_right_x'] - $textbox['bottom_left_x'];
+                    
+                    $this->text($value, $options['font_size'], 
+                            $xpos + ($col['width'] - $text_width) /2, 
+                            $pos[3] - $options['cell_padding']['bottom'], 
+                            empty($options['color']) ? 'red' : $options['color']);
+                
+                $xpos += $col['width'];
+            }
+      
+    }
+    
 
     public function testdraw($filename = null){
         
-        $this->image = imagecreatetruecolor(800, 600);
+        $this->image = imagecreatetruecolor($this->size['width'], $this->size['height']);
         imagefill($this->image, 0, 0, color($this->image, 'white'));
-        
-        
-        
-      //  imagerectangle ( resource $image , int $x1 , int $y1 , int $x2 , int $y2 , int $color )
-        imagefilledrectangle($this->image, 100, 100, 300, 500, color($this->image, 'red'));
-        $this->text(date('Русский текст'), 40, 200, 200, 'white');
-        
-        
 
-        // Set the content type header - in this case image/jpeg
-        //header('Content-Type: image/jpeg');
+      //  imagefilledrectangle($this->image, 100, 100, 300, 500, color($this->image, 'red'));
+      //  $this->text(date('Русский текст'), 40, 200, 200, 'white');
+
+        $this->table(array(
+            array(
+                'Model1' => array(
+                    'id' => 2000,
+                    'name' => 'Aaaaa'                       
+                )
+            ),
+            array(
+                'Model1' => array(
+                    'id' => 3000,
+                    'name' => 'Bbbbb'                       
+                ),
+                'color' => 'white',                
+                'background-color' => 'green'
+            ),
+            array(
+                'Model1' => array(
+                    'id' => 4678,
+                    'name' => 'Ccfg ggg ',
+                    'time' => '2015-09-12 12:00',
+                    'Time.is.now' => 'TRUE'
+                ),
+                 'color' => 'white',                
+                'background-color' => 'red'
+            ),
+        ), array(
+            'font_size' => 30,
+            'cols' => array(
+                'Model1.id',
+                'Model1.name',
+                'Model1.time',
+                'Model1.Time.is.now',
+            ),
+            'padding' => array(
+                'bottom' => 10
+            ),
+            'coords' => array(
+                10, 10, 1200, 1000
+            )
+            
+        ));
 
         // Output the image
         imagejpeg($this->image, $filename);
+        
+       
 
         // Free up memory
         imagedestroy($this->image);

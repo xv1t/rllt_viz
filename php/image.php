@@ -8,6 +8,9 @@ require 'RLLTImage.php';
 
 $rllt_image = new RLLTImage();
 
-$rllt_image->testdraw("/home/xvit/tmp/test.jpg");
+$settings = parse_ini_file('settings.ini', true);
+    $rllt_image->settings = $settings;
+
+$rllt_image->testdraw("/home/vt/tmp/test.jpg");
 //color(1, 2);
 
