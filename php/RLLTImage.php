@@ -335,7 +335,7 @@ class RLLTImage {
                 'bottom' => 10
             ),
             'coords' => array(
-                10, 50, 1910, 1000
+                10, 50, $this->size['width'] - 10, 1000
             )
         ));
         

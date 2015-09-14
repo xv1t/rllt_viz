@@ -12,7 +12,7 @@ require 'RLLTImage.php';
 
 function init($argv = array()){
 
-print_r($argv);
+
 
     $parser = new RLLT2300Parser();
     
@@ -23,7 +23,10 @@ print_r($argv);
         $parser->filename = $argv[1];
 
     if (!$parser->filename)
-        die("File not set!\n");
+	{ 
+		print_r(compact('argv'));
+		die("File not set!\n");
+	}
 
     if (!file_exists($parser->filename))
         die("File {$parser->filename} not exists!\n");
@@ -66,8 +69,10 @@ print_r($argv);
             'current_time' => $parser->current_time,
             'settings' => $settings,
             'save_to_files' => array(
-                "tmp/$src_file_name.jpg",
-                "tmp/$src_file_name-1.jpg",
+              //  "tmp/$src_file_name.jpg",
+              //  "tmp/$src_file_name-1.jpg",
+			  "C:\\Windows\\System32\\oobe\\info\\backgrounds\\$src_file_name.jpg",
+			  "C:\\Windows\\System32\\oobe\\info\\backgrounds\\backgroundDefault.jpg",
             )
         ));
     }

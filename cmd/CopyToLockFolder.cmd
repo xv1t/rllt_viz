@@ -1,2 +1,2 @@
-copy /y "C:\Users\admin\Pictures\My pictures\imag1.jpg" "C:\Users\admin\Pictures\My pictures\imag2.jpg"
-copy /y "C:\Users\admin\Pictures\My pictures\imag1.jpg" "C:\Windows\System32\oobe\info\backgrounds\backgroundDefault.jpg"
+
+copy /y "C:\Users\IEUser\Documents\GitHub\rllt_viz\tmp\RLLT2300_05F0.TXT.jpg" "C:\Windows\System32\oobe\info\backgrounds\backgroundDefault.jpg"
