@@ -71,8 +71,10 @@ function init($argv = array()){
             'save_to_files' => array(
               //  "tmp/$src_file_name.jpg",
               //  "tmp/$src_file_name-1.jpg",
-			  "C:\\Windows\\System32\\oobe\\info\\backgrounds\\$src_file_name.jpg",
-			  "C:\\Windows\\System32\\oobe\\info\\backgrounds\\backgroundDefault.jpg",
+			 // "C:\\Windows\\System32\\oobe\\info\\backgrounds\\$src_file_name.jpg",
+			 // "C:\\Windows\\System32\\oobe\\info\\backgrounds\\backgroundDefault.jpg",
+			 "D:\\xv1t\\tmp\\rllt_viz\\$src_file_name.jpg",
+			 "D:\\xv1t\\tmp\\rllt_viz\\$src_file_name-COPY.jpg",
             )
         ));
     }

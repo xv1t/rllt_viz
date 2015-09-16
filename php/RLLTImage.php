@@ -328,8 +328,8 @@ class RLLTImage {
         }
         
         $this->table($data, array(
-            'font_size' => 24,
-
+            'font_size' => empty($options['settings']['table']['font_size']) ? 30 : $options['settings']['table']['font_size'],
+			'border-color' => 'white',
             'cols' => $cols,
             'padding' => array(
                 'bottom' => 10
@@ -346,7 +346,7 @@ class RLLTImage {
          */
         
         foreach ($options['save_to_files'] as $filename){
-            imagejpeg($this->image, $filename);
+            imagejpeg($this->image, $filename, 100);
         }
         
         // Free up memory
